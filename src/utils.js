@@ -1,5 +1,4 @@
-const API_KEY = ""; // Api Key goes here; Note: don't commit this we will learn a better way.
-const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}&`;
+const API_URL = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&`;
 
 /**
  * Query API for Movies that match the search term.
@@ -11,7 +10,7 @@ export const getMoviesBySearchTerm = async (searchTerm) => {
         const response = await fetch(`${API_URL}s=${searchTerm}`);
         const data = await response.json();
         if (data.Response === 'True') {
-            return data.searchTerm;
+            return data.Search;
         }
     } catch (error) {
         console.error(error);
@@ -26,7 +25,7 @@ export const getMoviesBySearchTerm = async (searchTerm) => {
  */
 export const getMovieDetailsById = async (id) => {
     try {
-        const response = await fetch(`${API_URL}s=${id}`);
+        const response = await fetch(`${API_URL}i=${id}`);
         const data = await response.json();
         if (data.Response === 'True') {
             return data
