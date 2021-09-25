@@ -1,23 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import { MovieCard } from './components/MovieCard';
+import { useState, useEffect } from 'react';
+import { getMoviesBySearchTerm } from './utils';
 
 function App() {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+      getMoviesBySearchTerm("Batman").then(movieList => {
+        setMovies(movieList);
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {movies.map((movie, index) => {
+        return <MovieCard key={movie.imdbID} id={movie.imdbID} title={movie.Title} type={movie.Type} posterUrl={movie.Poster} />
+      })};
+
     </div>
   );
 }
